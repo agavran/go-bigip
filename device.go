@@ -110,6 +110,7 @@ type Devicegroups struct {
 }
 
 type Devicegroup struct {
+	AsmSync                      string
 	AutoSync                     string
 	Name                         string
 	Partition                    string
@@ -122,6 +123,7 @@ type Devicegroup struct {
 	Deviceb                      []Devicerecord
 }
 type devicegroupDTO struct {
+	AsmSync                      string `json:"asmSync,omitempty"`
 	AutoSync                     string `json:"autoSync,omitempty"`
 	Name                         string `json:"name,omitempty"`
 	Partition                    string `json:"partition,omitempty"`
@@ -149,6 +151,7 @@ func (p *Devicegroup) MarshalJSON() ([]byte, error) {
 	return json.Marshal(devicegroupDTO{
 		Name:                         p.Name,
 		Partition:                    p.Partition,
+		AsmSync:                      p.AsmSync,
 		AutoSync:                     p.AutoSync,
 		Description:                  p.Description,
 		Type:                         p.Type,
@@ -171,6 +174,7 @@ func (p *Devicegroup) UnmarshalJSON(b []byte) error {
 
 	p.Name = dto.Name
 	p.Partition = dto.Partition
+	p.AsmSync = dto.AsmSync
 	p.AutoSync = dto.AutoSync
 	p.Description = dto.Description
 	p.Type = dto.Type
