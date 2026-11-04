@@ -134,12 +134,12 @@ type devicegroupDTO struct {
 	NetworkFailover              string `json:"networkFailover,omitempty"`
 	IncrementalConfigSyncSizeMax int    `json:"incrementalConfigSyncSizeMax,omitempty"`
 	Deviceb                      struct {
-		Items []Devicerecord `json:"items,omitempty"`
+		Items []Devicerecord `json:"items,omitzero"`
 	} `json:"devicesReference,omitempty"`
 }
 
 type Devicerecords struct {
-	Items []Devicerecord `json:"items,omitempty"`
+	Items []Devicerecord `json:"items,omitzero"`
 }
 
 type Devicerecord struct {
@@ -160,7 +160,7 @@ func (p *Devicegroup) MarshalJSON() ([]byte, error) {
 		NetworkFailover:              p.NetworkFailover,
 		IncrementalConfigSyncSizeMax: p.IncrementalConfigSyncSizeMax,
 		Deviceb: struct {
-			Items []Devicerecord `json:"items,omitempty"`
+			Items []Devicerecord `json:"items,omitzero"`
 		}{Items: p.Deviceb},
 	})
 }
@@ -345,7 +345,7 @@ func (b *BigIP) ModifyDevicegroup(config *Devicegroup) error {
 
 func (b *BigIP) Devicegroups(name string) (*Devicegroup, error) {
 	var devicegroup Devicegroup
-	err, _ := b.getForEntity(&devicegroup, uriCm, uriDG, name)
+	err, _ := b.getForEntity(&devicegroup, uriCm, uriDG, name, "?expandSubcollections=true")
 	if err != nil {
 		return nil, err
 	}
